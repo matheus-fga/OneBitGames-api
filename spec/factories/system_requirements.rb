@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :system_requirement do
-    sequence(:name) { |n| "Name #{n}" }
+    sequence(:name) { |n| "Requirement #{n}" }
     operational_system { Faker::Computer.os }
     storage { "15gb" }
     processor { "Intel i5" }
