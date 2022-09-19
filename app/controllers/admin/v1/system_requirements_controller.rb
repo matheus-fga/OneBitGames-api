@@ -1,5 +1,7 @@
 module Admin::V1
   class SystemRequirementsController < ApiController
+    before_action :laod_system_requirement, only: [:update, :destroy]
+
     def index
       @system_requirements = SystemRequirement.all
     end
@@ -10,7 +12,16 @@ module Admin::V1
       save_system_requirement!
     end
 
+    def update
+      @system_requirement.attributes = system_requirement_params
+      save_system_requirement!
+    end
+
     private
+
+    def laod_system_requirement
+      @system_requirement = SystemRequirement.find(params[:id])
+    end
 
     def system_requirement_params
       return {} unless params.has_key?(:system_requirement)
