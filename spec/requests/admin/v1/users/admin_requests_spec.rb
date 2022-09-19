@@ -5,10 +5,11 @@ RSpec.describe "Admin::V1::Users as :admin", type: :request do
 
   context "GET /users" do
     let(:url) { "/admin/v1/users" }
-    let!(:users) { create_list(:user, 5, profile: :client) }
+    let!(:users) { create_list(:user, 5) }
 
     it "should return all users" do
       get url, headers: auth_header(logged_user)
+      users.push(logged_user)
       expect(body_json['users']).to contain_exactly *users.as_json(
         only: %i(id name email profile)
       )
