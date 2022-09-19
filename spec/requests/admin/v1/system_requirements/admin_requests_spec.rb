@@ -10,12 +10,62 @@ RSpec.describe "Admin::V1::SystemRequirements as :admin", type: :request do
     it "returns all system requirements" do
       get url, headers: auth_header(user)
       expect(body_json['system_requirements']).to contain_exactly *system_requirements.as_json(
-      only: %i(id name operational_system storage processor memory video_board))
+        only: %i(id name operational_system storage processor memory video_board)
+      )
     end
 
     it "returns success status" do
       get url, headers: auth_header(user)
       expect(response).to have_http_status(:ok)
+    end
+  end
+
+  context "POST /system_requirements" do
+    let(:url) { "/admin/v1/system_requirements" }
+
+    context "with valid params" do
+      let(:system_requirement_params) { { system_requirement: attributes_for(:system_requirement) }.to_json }
+
+      it "adds a new SystemRequirement" do
+        expect do
+          post url, headers: auth_header(user), params: system_requirement_params
+        end.to change(SystemRequirement, :count).by(1)
+      end
+
+      it "returns last added SystemRequirement" do
+        post url, headers: auth_header(user), params: system_requirement_params
+        expected_system_requirement = SystemRequirement.last.as_json(
+          only: %i(id name operational_system storage processor memory video_board)
+        )
+        expect(body_json['system_requirement']).to eq(expected_system_requirement)
+      end
+
+      it "returns success status" do
+        post url, headers: auth_header(user), params: system_requirement_params
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "with invalid params" do
+      let(:invalid_system_requirement_params) do
+        { system_requirement: attributes_for(:system_requirement, name: nil) }.to_json
+      end
+
+      it "does not add a new SystemRequirement" do
+        expect do
+          post url, headers: auth_header(user), params: invalid_system_requirement_params
+        end.to_not change(SystemRequirement, :count)
+      end
+
+      it "returns error message" do
+        post url, headers: auth_header(user), params: invalid_system_requirement_params
+        expect(body_json['errors']['fields']).to have_key('name')
+      end
+
+      it "returns unprocessable_entity status" do
+        post url, headers: auth_header(user), params: invalid_system_requirement_params
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end
