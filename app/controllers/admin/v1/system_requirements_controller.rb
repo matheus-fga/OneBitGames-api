@@ -1,6 +1,6 @@
 module Admin::V1
   class SystemRequirementsController < ApiController
-    before_action :laod_system_requirement, only: [:update, :destroy]
+    before_action :load_system_requirement, only: [:update, :destroy]
 
     def index
       @system_requirements = SystemRequirement.all
@@ -25,7 +25,7 @@ module Admin::V1
 
     private
 
-    def laod_system_requirement
+    def load_system_requirement
       @system_requirement = SystemRequirement.find(params[:id])
     end
 
