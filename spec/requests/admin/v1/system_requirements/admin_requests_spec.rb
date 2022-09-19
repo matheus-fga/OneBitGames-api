@@ -146,9 +146,18 @@ RSpec.describe "Admin::V1::SystemRequirements as :admin", type: :request do
       end
     end
 
-    context "with gamames associated" do
-      it "should return an error" do
+    context "with games associated" do
+      before(:each) do
         create_list(:game, 3, system_requirement: system_requirement)
+      end
+
+      it "should not remove the system requirement" do
+        expect do  
+          delete url, headers: auth_header(user)
+        end.to_not change(SystemRequirement, :count)
+      end
+
+      it "should return an error" do
         delete url, headers: auth_header(user)
         expect(body_json['errors']['fields']).to have_key('base')
       end
