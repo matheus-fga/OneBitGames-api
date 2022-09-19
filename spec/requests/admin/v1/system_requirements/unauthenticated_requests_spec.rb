@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Admin::V1::SystemRequirements without authentication", type: :request do
 
-  context "GET /categories" do
+  context "GET /system_requirements" do
     let(:url ) { "/admin/v1/system_requirements" }
 
     before(:each) { get url }
@@ -10,7 +10,7 @@ RSpec.describe "Admin::V1::SystemRequirements without authentication", type: :re
     include_examples "unauthenticated access"
   end
 
-  context "POST /categories" do
+  context "POST /system_requirements" do
     let(:url ) { "/admin/v1/system_requirements" }
 
     before(:each) { post url }
@@ -18,7 +18,7 @@ RSpec.describe "Admin::V1::SystemRequirements without authentication", type: :re
     include_examples "unauthenticated access"
   end
 
-  context "PATCH /categories/:id" do
+  context "PATCH /system_requirements/:id" do
     let(:system_requirement) { create(:system_requirement) }
     let(:url) { "/admin/v1/system_requirements/#{system_requirement.id}" }
 
@@ -27,7 +27,7 @@ RSpec.describe "Admin::V1::SystemRequirements without authentication", type: :re
     include_examples "unauthenticated access"
   end
 
-  context "DELETE /categories/:id" do
+  context "DELETE /system_requirements/:id" do
     let(:system_requirement) { create(:system_requirement) }
     let(:url) { "/admin/v1/system_requirements/#{system_requirement.id}" }
 
