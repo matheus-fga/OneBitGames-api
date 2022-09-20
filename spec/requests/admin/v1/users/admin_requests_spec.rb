@@ -90,7 +90,7 @@ RSpec.describe "Admin::V1::Users as :admin", type: :request do
         patch url, headers: auth_header(logged_user), params: user_params
         user.reload
         expected_user = user.as_json(
-          only: %i(id name code status discount_value max_use due_date)
+          only: %i(id name email profile)
         )
         expect(body_json['user']).to eq expected_user
       end
