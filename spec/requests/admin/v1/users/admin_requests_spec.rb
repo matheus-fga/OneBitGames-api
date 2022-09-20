@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin::V1::Users as :admin", type: :request do
-  let(:logged_user) { create(:user) }
+  let!(:logged_user) { create(:user) }
 
   context "GET /users" do
     let(:url) { "/admin/v1/users" }
@@ -38,7 +38,7 @@ RSpec.describe "Admin::V1::Users as :admin", type: :request do
         expected_user = User.last.as_json(
           only: %i(id name email profile)
         )
-        expect(body_json['coupon']).to eq expected_user
+        expect(body_json['user']).to eq expected_user
       end
 
       it "should return success status" do
