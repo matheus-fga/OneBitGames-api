@@ -17,6 +17,12 @@ module Admin::V1
       save_user!
     end
 
+    def destroy
+      @user.destroy!
+    rescue
+      render_error(fields: @user.errors.messages)
+    end
+
     private
 
     def load_user

@@ -132,7 +132,7 @@ RSpec.describe "Admin::V1::Users as :admin", type: :request do
     it "should remove the user" do
       expect do
         delete url, headers: auth_header(logged_user)
-      end.to change(user, :count).by(-1)
+      end.to change(User, :count).by(-1)
     end
 
     it "should not return any body content" do
