@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :license do
-    key { "MyString" }
-    platform { 1 }
-    status { 1 }
-    game { nil }
+    sequence(:key) { |n| "License #{n}" }
+    platform { %i(steam battle_net origin).sample }
+    status { :available }
+    game
   end
 end
