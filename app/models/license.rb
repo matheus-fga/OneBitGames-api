@@ -9,4 +9,5 @@ class License < ApplicationRecord
   enum status: { available: 1, in_use: 2, inactive: 3 }
 
   include Paginatable
+  include LikeSearchable
 end
