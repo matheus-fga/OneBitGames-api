@@ -37,7 +37,7 @@ module Admin::V1
     def user_params
       return {} unless params.has_key?('user')
       params.require('user').permit(
-        :id, :name, :email, :password, :password_confirmation, :profile
+        :name, :email, :password, :password_confirmation, :profile
       )
     end
 
